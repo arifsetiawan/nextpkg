@@ -3,7 +3,7 @@ package response
 import (
 	"strconv"
 
-	"github.com/arifsetiawan/go-common/env"
+	"github.com/arifsetiawan/nextpkg/env"
 	"github.com/labstack/echo"
 	log "github.com/sirupsen/logrus"
 )

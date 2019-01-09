@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/arifsetiawan/go-common/query"
+	"github.com/arifsetiawan/nextpkg/query"
 
 	"github.com/labstack/echo"
 )

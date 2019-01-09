@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/arifsetiawan/go-common/model"
+	"github.com/arifsetiawan/nextpkg/model"
 )
 
 // copied from https://husobee.github.io/golang/ip-address/2015/12/17/remote-ip-go.html

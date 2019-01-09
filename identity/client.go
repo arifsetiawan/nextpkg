@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/arifsetiawan/go-common/model"
+	"github.com/arifsetiawan/nextpkg/model"
 	"github.com/parnurzeal/gorequest"
 )
 

@@ -3,7 +3,7 @@ package tracing
 import (
 	"time"
 
-	"github.com/arifsetiawan/go-common/random"
+	"github.com/arifsetiawan/nextpkg/random"
 	log "github.com/sirupsen/logrus"
 )
 
