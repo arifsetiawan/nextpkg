@@ -20,6 +20,7 @@ type Response struct {
 // Error object
 type Error struct {
 	Status int    `json:"status,omitempty"`
+	Code   int    `json:"code,omitempty"`
 	Title  string `json:"title,omitempty"`
 	Detail string `json:"detail,omitempty"`
 }

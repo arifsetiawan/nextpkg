@@ -9,7 +9,7 @@ import (
 func TestSendSMS(t *testing.T) {
 
 	client := NewClient(os.Getenv("TWILIO_SID"), os.Getenv("TWILIO_KEY"), os.Getenv("TWILIO_FROM"))
-	r, err := client.SendSMS("+6281112345678", "123456")
+	r, err := client.SendSMS("+62847123456", "123456")
 	if err != nil {
 		t.Error(err.Error())
 	}

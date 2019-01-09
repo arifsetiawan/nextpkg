@@ -80,7 +80,9 @@ func (t *Client) SendSMS(to string, otpCode string) (*SMSResponse, error) {
 		return nil, err
 	}
 
-	if resp.StatusCode != 200 {
+	fmt.Println(resp.StatusCode, string(body))
+
+	if resp.StatusCode != 201 {
 		errorResponse := &ErrorResponse{}
 		err := json.Unmarshal(body, errorResponse)
 		if err != nil {
