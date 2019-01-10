@@ -65,7 +65,8 @@ var (
 			// skip for static resource and favicon
 			if strings.Contains(c.Request().RequestURI, "/public/") ||
 				strings.Contains(c.Request().RequestURI, "favicon") ||
-				strings.Contains(c.Request().RequestURI, "/js/") {
+				strings.Contains(c.Request().RequestURI, "/js/") ||
+				strings.Contains(c.Request().Method, "OPTIONS") {
 				return true
 			}
 			return false
