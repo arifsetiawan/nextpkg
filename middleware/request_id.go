@@ -51,6 +51,7 @@ func RequestIDWithConfig(config RequestIDConfig) echo.MiddlewareFunc {
 			rid := req.Header.Get(echo.HeaderXRequestID)
 			if rid == "" {
 				rid = config.Generator()
+				req.Header.Set(echo.HeaderXRequestID, rid)
 			}
 			res.Header().Set(echo.HeaderXRequestID, rid)
 
@@ -61,5 +62,5 @@ func RequestIDWithConfig(config RequestIDConfig) echo.MiddlewareFunc {
 }
 
 func generator() string {
-	return random.String(32)
+	return random.String(16)
 }
