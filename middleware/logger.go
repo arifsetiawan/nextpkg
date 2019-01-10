@@ -77,7 +77,7 @@ var (
 			`"referer":"${referer}","user_agent":"${user_agent}",` +
 			`"uri":"${uri}","method":"${method}","path":"${path}","status":${status},` +
 			`"latency":${latency},"latency_human":"${latency_human}",` +
-			`"bytes_in":${bytes_in},"bytes_out":${bytes_out}}` + "\n",
+			`"bytes_in":${bytes_in},"bytes_out":${bytes_out},"req_id":"${req_id}"}` + "\n",
 		Output:  os.Stdout,
 		colorer: color.New(),
 	}
@@ -193,6 +193,9 @@ func LoggerWithConfig(config LoggerConfig, appName string) echo.MiddlewareFunc {
 					return buf.WriteString(cl)
 				case "bytes_out":
 					return buf.WriteString(strconv.FormatInt(res.Size, 10))
+				case "req_id":
+					rid := req.Header.Get(echo.HeaderXRequestID)
+					return buf.WriteString(rid)
 				default:
 					switch {
 					case strings.HasPrefix(tag, "header:"):
