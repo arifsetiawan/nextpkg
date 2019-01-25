@@ -24,9 +24,14 @@ func ErrorHandler(logger *logrus.Entry) func(error, echo.Context) {
 			tenant = "none"
 		}
 
+		heCode := http.StatusInternalServerError
+		if he, ok := err.(*echo.HTTPError); ok {
+			heCode = he.Code
+		}
+
 		ae, ok := err.(*apierror.APIError)
 		if !ok {
-			err = apierror.NewError(http.StatusInternalServerError, http.StatusText(http.StatusInternalServerError), errors.Wrap(err, "errorhandler: internal error"))
+			err = apierror.NewError(heCode, http.StatusText(heCode), errors.Wrap(err, "errorhandler: internal error"))
 			ae, _ = err.(*apierror.APIError)
 		}
 
@@ -49,8 +54,8 @@ func ErrorHandler(logger *logrus.Entry) func(error, echo.Context) {
 
 		logger.WithFields(logrus.Fields{
 			"path":   path,
-			"tenant": "tenant",
-			"method": "req.Method",
+			"tenant": tenant,
+			"method": req.Method,
 		}).Error(ae.Message)
 
 		r := new(response.Response)
@@ -68,8 +73,8 @@ func ErrorHandler(logger *logrus.Entry) func(error, echo.Context) {
 			if err != nil {
 				logger.WithFields(logrus.Fields{
 					"path":   path,
-					"tenant": "tenant",
-					"method": "req.Method",
+					"tenant": tenant,
+					"method": req.Method,
 				}).Error(ae.Message)
 			}
 		}

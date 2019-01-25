@@ -27,4 +27,5 @@ type ClientItem struct {
 	EnableCaptchaSignin bool   `json:"enable_captcha_signin,omitempty"`
 	EnableCaptchaSignup bool   `json:"enable_captcha_signup,omitempty"`
 	EnableMFA           bool   `json:"enable_mfa,omitempty"`
+	CustomThemeID       string `json:"custom_theme_id"`
 }
