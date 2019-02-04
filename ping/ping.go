@@ -1,14 +1,15 @@
 package ping
 
 import (
+	"net/http"
 	"time"
-
-	"github.com/parnurzeal/gorequest"
 )
 
 // CheckURL is
-func CheckURL(url string, timeout time.Duration) (string, []error) {
-	request := gorequest.New().Timeout(timeout)
-	_, body, errs := request.Get(url).End()
-	return body, errs
+func CheckURL(url string, timeout time.Duration) (string, error) {
+	client := http.Client{
+		Timeout: timeout,
+	}
+	_, err := client.Get(url)
+	return "", err
 }

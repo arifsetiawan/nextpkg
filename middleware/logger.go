@@ -66,6 +66,7 @@ var (
 			if strings.Contains(c.Request().RequestURI, "/public/") ||
 				strings.Contains(c.Request().RequestURI, "favicon") ||
 				strings.Contains(c.Request().RequestURI, "/js/") ||
+				strings.Contains(c.Request().RequestURI, "/metrics") ||
 				strings.Contains(c.Request().Method, "OPTIONS") {
 				return true
 			}
