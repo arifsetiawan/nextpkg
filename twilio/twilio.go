@@ -56,12 +56,12 @@ func NewClient(sid string, token string, from string) *Client {
 }
 
 // SendSMS ...
-func (t *Client) SendSMS(to string, otpCode string) (*SMSResponse, error) {
+func (t *Client) SendSMS(to string, body string) (*SMSResponse, error) {
 
 	msgData := url.Values{}
 	msgData.Set("To", to)
 	msgData.Set("From", t.FromNumber)
-	msgData.Set("Body", "Your verification code is "+otpCode)
+	msgData.Set("Body", body)
 	msgDataReader := *strings.NewReader(msgData.Encode())
 
 	// Create HTTP request client
@@ -74,17 +74,17 @@ func (t *Client) SendSMS(to string, otpCode string) (*SMSResponse, error) {
 	// Make HTTP POST request and return message SID
 	resp, _ := client.Do(req)
 
-	// Get body
-	body, err := ioutil.ReadAll(resp.Body)
+	// Get respBody
+	respBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	fmt.Println(resp.StatusCode, string(body))
+	fmt.Println(resp.StatusCode, string(respBody))
 
 	if resp.StatusCode != 201 {
 		errorResponse := &ErrorResponse{}
-		err := json.Unmarshal(body, errorResponse)
+		err := json.Unmarshal(respBody, errorResponse)
 		if err != nil {
 			return nil, err
 		}
@@ -94,7 +94,7 @@ func (t *Client) SendSMS(to string, otpCode string) (*SMSResponse, error) {
 	}
 
 	smsResponse := &SMSResponse{}
-	err = json.Unmarshal(body, smsResponse)
+	err = json.Unmarshal(respBody, smsResponse)
 	if err != nil {
 		return nil, err
 	}
@@ -113,15 +113,15 @@ func (t *Client) Lookup(to string) (*LookupResponse, error) {
 	// Make HTTP POST request and return message SID
 	resp, _ := client.Do(req)
 
-	// Get body
-	body, err := ioutil.ReadAll(resp.Body)
+	// Get respBody
+	respBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
 
 	if resp.StatusCode != 200 {
 		errorResponse := &ErrorResponse{}
-		err := json.Unmarshal(body, errorResponse)
+		err := json.Unmarshal(respBody, errorResponse)
 		if err != nil {
 			return nil, err
 		}
@@ -131,7 +131,7 @@ func (t *Client) Lookup(to string) (*LookupResponse, error) {
 	}
 
 	lookupResponse := &LookupResponse{}
-	err = json.Unmarshal(body, lookupResponse)
+	err = json.Unmarshal(respBody, lookupResponse)
 	if err != nil {
 		return nil, err
 	}
