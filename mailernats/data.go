@@ -1,4 +1,4 @@
-package mailer
+package mailernats
 
 // EmailData is
 type EmailData struct {

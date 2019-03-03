@@ -1,40 +1,32 @@
 package mailer
 
 import (
+	"os"
+	"strconv"
 	"testing"
-
-	nats "github.com/nats-io/go-nats"
 )
 
 func TestSendEmail(t *testing.T) {
-	natsURL := "nats://192.168.99.100:4222"
-	nc, err := nats.Connect(natsURL)
-	if err != nil {
-		t.Error(err.Error())
+
+	port, _ := strconv.Atoi(os.Getenv("MAILER_PORT"))
+
+	mailer := &Mailer{
+		Host:               os.Getenv("MAILER_HOST"),
+		Port:               port,
+		Username:           os.Getenv("MAILER_AUTH_USER"),
+		Password:           os.Getenv("MAILER_AUTH_PASS"),
+		InsecureSkipVerify: true,
 	}
 
-	defer nc.Close()
+	mailData := &MailData{
+		From:    "one@nextflow.tech",
+		Tos:     []string{"arif.setiawan@notmymail.com"},
+		Subject: "Test",
+		Body:    "Hello",
+	}
 
-	mailer := NewMailerNats(nc, "mailer.send")
-
-	emailData := &EmailData{}
-	emailData.To = append(emailData.To, Recipient{
-		Name:    "Arif Setiawan",
-		Address: "arif.setiawan@notmymail.com",
-	})
-	emailData.Subject = "This is email from mailer"
-	emailData.Body.Type = "html"
-	emailData.Body.Value = `
-		<p>Dear Arif,</p>
-		<p><br></p>
-		<p>Verify to this link.</p>
-		<p>Thanks</p>
-		<p><br></p>
-		<p>Best,</p>
-	`
-
-	err = mailer.Send(emailData)
+	err := mailer.Send(mailData)
 	if err != nil {
-		t.Error(err.Error())
+		t.Error(err)
 	}
 }

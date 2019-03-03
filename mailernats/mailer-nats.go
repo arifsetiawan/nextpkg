@@ -1,9 +1,9 @@
-package mailer
+package mailernats
 
 import (
+	"encoding/json"
 	"fmt"
 	"time"
-	"encoding/json"
 
 	nats "github.com/nats-io/go-nats"
 )
@@ -33,7 +33,7 @@ func (m *MailerNats) Send(data *EmailData) error {
 	if err != nil {
 		return err
 	}
-	
+
 	fmt.Println("Mailer response", msg)
 
 	err = m.Connection.Flush()
